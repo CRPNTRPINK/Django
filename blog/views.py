@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from .utils import ObjectDetailMixin
 from .models import *
-from .forms import TagForm
+from .forms import TagForm, PostForm
 
 
 def post_list(request):
@@ -21,6 +21,16 @@ def tags_list(request):
     tags = Tag.objects.all()
     return render(request, 'blog/tags_list.html', context={'tags': tags})
 
+class PostCreate(View):
+    def get(self, request):
+        form = PostForm()
+        return render(request, 'blog/post_create_form.html', context={'form': form})
+    def post(self, request):
+        form = PostForm(request.POST)
+        if form.is_valid():
+            new_post = form.save()
+            return redirect(new_post)
+        return render(request, 'blog/post_create_form.html', context={'form': form})
 
 class TagCreate(View):
 
