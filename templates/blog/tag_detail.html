@@ -6,8 +6,5 @@
 
 {% block content %}
     <h1 class="md-5">Post with "{{ tag.title|title }}" tag:</h1>
-    {% for post in tag.posts.all %}
-        {% include 'blog/include/post_card_templates.html' %}
-    {% endfor %}
-    
+    <a href="{{tag.get_delete_url}}">Удалить</a>
 {% endblock %}

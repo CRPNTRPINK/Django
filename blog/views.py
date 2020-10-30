@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import View
-from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin
+from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
 from .models import *
 from .forms import TagForm, PostForm
 from django.shortcuts import redirect
@@ -26,6 +26,16 @@ class PostCreate(ObjectCreateMixin, View):
     template = 'blog/post_create_form.html'
 
 
+class PostUpdate(ObjectUpdateMixin, View):
+    model_obj = Post
+    model_form = PostForm
+    template = 'blog/post_update_form.html'
+
+class PostDelete(ObjectDeleteMixin, View):
+    model = Post
+    redirect_url = 'post_lists_url'
+
+
 class TagCreate(ObjectCreateMixin, View):
     model_form = TagForm
     template = 'blog/tag_create.html'
@@ -36,11 +46,12 @@ class TagUpdate(ObjectUpdateMixin, View):
     model_form = TagForm
     template = 'blog/tag_update_form.html'
 
-class PostUpdate(ObjectUpdateMixin, View):
-    model_obj = Post
-    model_form = PostForm
-    template = 'blog/post_update_form.html'
 
 class TagDetail(ObjectDetailMixin, View):
     model = Tag
     template = 'blog/tag_detail.html'
+
+
+class TagDelete(ObjectDeleteMixin, View):
+    model = Tag
+    redirect_url = 'tags_list_url'

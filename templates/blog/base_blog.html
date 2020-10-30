@@ -1,1 +1,7 @@
 {% extends "base.html" %}
+
+{% block admin-panel %}
+    <a href="{% if posts %} {% url 'post_create_url' %} {% elif tags%} {% url 'tag_create_url' %} {% endif %}" class="btn btn-light">Create</a>
+    <a href="{% if post %}{{ post.get_update_url }} {% elif tag %} {{ tag.get_update_url }}{% endif %}"
+       class="btn btn-light edit" style="{% if detail %}display:block{% endif %}">Edit</a>
+{% endblock %}
